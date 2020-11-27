@@ -3,6 +3,7 @@ package git
 import (
 	"log"
 	"os/exec"
+	"strings"
 )
 
 func executeGit(args ...string) (string, error) {
@@ -38,4 +39,8 @@ func DeleteTag(version string) (string, error) {
 // PushTag execute git push command and sync remote version and local version.
 func PushTag(version string) (string, error) {
 	return executeGit("git", "push", "origin", version)
+}
+
+func parse(versions string) []string {
+	return strings.Split(strings.TrimSuffix(versions, "\n"), "\n")
 }
