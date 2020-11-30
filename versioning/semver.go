@@ -1,6 +1,12 @@
 package versioning
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"log"
+	"strconv"
+	"strings"
+)
 
 // SemVer replesents Semantic Versioning.
 type SemVer struct {
@@ -52,6 +58,48 @@ func (s *SemVer) ToString() string {
 
 // SemVerList implements sort.Interface.
 type SemVerList []SemVer
+
+// From ceonverts to []Semver from version strings.
+func From(versions []string) SemVerList {
+	var list SemVerList
+	for _, s := range versions {
+		result := strings.Split(strings.TrimPrefix(s, "v"), ".")
+		if len(result) != 3 {
+			continue
+		}
+		semver, err := from(result)
+		if err != nil {
+			log.Printf("cannot parse %s: %v", s, err)
+			continue
+		}
+		list = append(list, semver)
+	}
+	return list
+}
+
+func from(list []string) (SemVer, error) {
+	var major, minor, patch uint16
+	for n, s := range list {
+		num, err := strconv.Atoi(s)
+		if err != nil {
+			return SemVer{}, err
+		}
+		if num < 0 {
+			return SemVer{}, errors.New("version includes negative value")
+		}
+		switch n {
+		case 0:
+			major = uint16(num)
+		case 1:
+			minor = uint16(num)
+		case 2:
+			patch = uint16(num)
+		default:
+			return SemVer{}, errors.New("unexpected error")
+		}
+	}
+	return SemVer{Major: major, Minor: minor, Patch: patch}, nil
+}
 
 // Len returs list length.
 func (l SemVerList) Len() int {

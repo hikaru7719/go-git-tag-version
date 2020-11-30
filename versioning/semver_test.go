@@ -85,3 +85,39 @@ func TestToString(t *testing.T) {
 		})
 	}
 }
+
+func TestFrom(t *testing.T) {
+	cases := map[string]struct {
+		input  []string
+		expect SemVerList
+	}{
+		"semver list from string literal": {
+			input: []string{"v99.99.99", "v99.99.98", "v99.99.97"},
+			expect: SemVerList{
+				SemVer{
+					Major: 99,
+					Minor: 99,
+					Patch: 99,
+				},
+				SemVer{
+					Major: 99,
+					Minor: 99,
+					Patch: 98,
+				},
+				SemVer{
+					Major: 99,
+					Minor: 99,
+					Patch: 97,
+				},
+			},
+		},
+	}
+
+	for n, tc := range cases {
+		tc := tc
+		t.Run(n, func(t *testing.T) {
+			result := From(tc.input)
+			assert.Equal(t, tc.expect, result)
+		})
+	}
+}
