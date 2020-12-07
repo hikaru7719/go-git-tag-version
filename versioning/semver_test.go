@@ -15,6 +15,10 @@ func TestIncrementMajor(t *testing.T) {
 			before: New(1, 0, 0),
 			after:  New(2, 0, 0),
 		},
+		"incremental major version when minor and patch is not zero": {
+			before: New(1, 1, 2),
+			after:  New(2, 0, 0),
+		},
 	}
 
 	for n, tc := range cases {
@@ -34,6 +38,10 @@ func TestIncrementMinor(t *testing.T) {
 		"increment minor version": {
 			before: New(1, 0, 0),
 			after:  New(1, 1, 0),
+		},
+		"increment minor version when patch is not zero": {
+			before: New(1, 1, 1),
+			after:  New(1, 2, 0),
 		},
 	}
 

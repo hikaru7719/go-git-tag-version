@@ -28,8 +28,8 @@ func New(major, minor, patch uint16) *SemVer {
 func (s *SemVer) IncrementMajor() *SemVer {
 	return &SemVer{
 		Major: s.Major + 1,
-		Minor: s.Minor,
-		Patch: s.Patch,
+		Minor: 0,
+		Patch: 0,
 	}
 }
 
@@ -38,7 +38,7 @@ func (s *SemVer) IncrementMinor() *SemVer {
 	return &SemVer{
 		Major: s.Major,
 		Minor: s.Minor + 1,
-		Patch: s.Patch,
+		Patch: 0,
 	}
 }
 
