@@ -1,4 +1,4 @@
-package main
+package runner
 
 import (
 	"log"
@@ -22,7 +22,7 @@ func Run(major, minor, patch bool) error {
 	if err != nil {
 		return xerrors.Errorf("NewIncrement failed major:%v, minor:%,v patch:%v #w", major, minor, patch, err)
 	}
-	newVersion := incrementer.Increment(&semvers[0])
+	newVersion := incrementer.Increment(&semvers[semvers.Len()-1])
 	_, err = git.TagVersioning(newVersion.ToString())
 	if err != nil {
 		return xerrors.Errorf("git tab versioning failed %s #w", newVersion.ToString(), err)

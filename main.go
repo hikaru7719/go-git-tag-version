@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/hikaru7719/go-git-tag-version/runner"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +16,7 @@ var (
 		Long: `You can use git-tag-version with --major, --minor, --patch flags like yarn version. 
 git-tag-version increments your git tag version depending on your flags.`,
 		Run: func(cmd *cobra.Command, args []string) {
-			Run(major, minor, patch)
+			runner.Run(major, minor, patch)
 		},
 	}
 )
