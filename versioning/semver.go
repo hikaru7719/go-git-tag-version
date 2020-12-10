@@ -156,7 +156,7 @@ func (l SemVerList) Swap(i, j int) {
 
 // Less returns bool value whether i is less than j.
 func (l SemVerList) Less(i, j int) bool {
-	return l[i].Major < l[j].Major || (l[i].Major == l[i].Major &&
-		l[i].Minor < l[j].Minor) || (l[i].Major == l[i].Major &&
+	return l[i].Major < l[j].Major || (l[i].Major == l[j].Major &&
+		l[i].Minor < l[j].Minor) || (l[i].Major == l[j].Major &&
 		l[i].Minor < l[j].Minor && l[i].Patch < l[j].Patch)
 }
