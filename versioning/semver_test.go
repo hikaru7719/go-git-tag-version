@@ -1,6 +1,7 @@
 package versioning
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -126,6 +127,26 @@ func TestFrom(t *testing.T) {
 		t.Run(n, func(t *testing.T) {
 			result := From(tc.input)
 			assert.Equal(t, tc.expect, result)
+		})
+	}
+}
+
+func TestSemverListSort(t *testing.T) {
+	cases := map[string]struct {
+		list   SemVerList
+		expect SemVer
+	}{
+		"latest version is v2.0.0 among [v2.0.0, v1.0.0, v1.2.0, v1.1.1, v0.0.1]": {
+			list:   From([]string{"v2.0.0", "v1.0.0", "v1.2.0", "v1.1.1", "v0.0.1"}),
+			expect: *New(2, 0, 0),
+		},
+	}
+
+	for n, tc := range cases {
+		tc := tc
+		t.Run(n, func(t *testing.T) {
+			sort.Sort(tc.list)
+			assert.Equal(t, tc.expect, tc.list[tc.list.Len()-1])
 		})
 	}
 }
