@@ -26,7 +26,7 @@ func TagVersioning(version string) (string, error) {
 	return executeGit("tag", version)
 }
 
-// Tag execute git tag command and read all version.
+// Tag executes git tag command and read all version.
 func Tag() (string, error) {
 	return executeGit("tag")
 }
@@ -36,7 +36,7 @@ func DeleteTag(version string) (string, error) {
 	return executeGit("tag", "-d", version)
 }
 
-// PushTag execute git push command and sync remote version and local version.
+// PushTag executes git push command and sync remote version and local version.
 func PushTag(version string) (string, error) {
 	return executeGit("git", "push", "origin", version)
 }
