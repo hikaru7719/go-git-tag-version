@@ -49,7 +49,7 @@ func TestParse(t *testing.T) {
 	for n, tc := range cases {
 		tc := tc
 		t.Run(n, func(t *testing.T) {
-			result := parse(tc.input)
+			result := Parse(tc.input)
 			assert.Equal(t, tc.expectArray, result)
 		})
 	}
