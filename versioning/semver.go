@@ -8,6 +8,49 @@ import (
 	"strings"
 )
 
+// Incrementer is interface to encapsulate version increment.
+type Incrementer interface {
+	Increment(*SemVer) *SemVer
+}
+
+// MajorIncrement is struct for Incrementer.
+type MajorIncrement struct{}
+
+// Increment increments major version.
+func (m *MajorIncrement) Increment(semver *SemVer) *SemVer {
+	return semver.IncrementMajor()
+}
+
+// MinorIncrement is struct for Incrementer.
+type MinorIncrement struct{}
+
+// Increment increments minor version.
+func (m *MinorIncrement) Increment(semver *SemVer) *SemVer {
+	return semver.IncrementMinor()
+}
+
+// PatchIncrement is struct for Incrementer.
+type PatchIncrement struct{}
+
+// Increment increments patch version.
+func (p *PatchIncrement) Increment(semver *SemVer) *SemVer {
+	return semver.IncrementPatch()
+}
+
+// NewIncrement is factory method of Incrementer interface.
+func NewIncrement(major, minor, patch bool) (Incrementer, error) {
+	if major {
+		return &MajorIncrement{}, nil
+	}
+	if minor {
+		return &MinorIncrement{}, nil
+	}
+	if patch {
+		return &PatchIncrement{}, nil
+	}
+	return nil, errors.New("all args(major, minor, patch) are false")
+}
+
 // SemVer replesents Semantic Versioning.
 type SemVer struct {
 	Major uint16

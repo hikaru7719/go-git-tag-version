@@ -41,6 +41,7 @@ func PushTag(version string) (string, error) {
 	return executeGit("git", "push", "origin", version)
 }
 
-func parse(versions string) []string {
+// Parse parses version string.
+func Parse(versions string) []string {
 	return strings.Split(strings.TrimSuffix(versions, "\n"), "\n")
 }
