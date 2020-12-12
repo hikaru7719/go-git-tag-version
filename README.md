@@ -1,7 +1,7 @@
 # go-git-tag-version
 
-go-git-tag-version supports versioning of git tag.
-You can do versioning using go-git-tag-version with --major,--minor,--patch options like `yarn version`.
+go-git-tag-version supports versioning of git tag.  
+You can do versioning using go-git-tag-version with --major, --minor, --patch options like `yarn version`.
 
 ## Usage
 
