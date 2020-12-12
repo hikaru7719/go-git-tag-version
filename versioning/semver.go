@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -51,7 +52,7 @@ func NewIncrement(major, minor, patch bool) (Incrementer, error) {
 	return nil, errors.New("all args(major, minor, patch) are false")
 }
 
-// SemVer replesents Semantic Versioning.
+// SemVer represents Semantic Versioning.
 type SemVer struct {
 	Major uint16
 	Minor uint16
@@ -94,7 +95,7 @@ func (s *SemVer) IncrementPatch() *SemVer {
 	}
 }
 
-// ToString returs semantic versioning string.
+// ToString returns semantic versioning string.
 func (s *SemVer) ToString() string {
 	return fmt.Sprintf("v%d.%d.%d", s.Major, s.Minor, s.Patch)
 }
@@ -102,7 +103,7 @@ func (s *SemVer) ToString() string {
 // SemVerList implements sort.Interface.
 type SemVerList []SemVer
 
-// From ceonverts to []Semver from version strings.
+// From converts to []Semver from version strings.
 func From(versions []string) SemVerList {
 	var list SemVerList
 	for _, s := range versions {
@@ -144,7 +145,7 @@ func from(list []string) (SemVer, error) {
 	return SemVer{Major: major, Minor: minor, Patch: patch}, nil
 }
 
-// Len returs list length.
+// Len returns list length.
 func (l SemVerList) Len() int {
 	return len(l)
 }
@@ -159,4 +160,18 @@ func (l SemVerList) Less(i, j int) bool {
 	return l[i].Major < l[j].Major || (l[i].Major == l[j].Major &&
 		l[i].Minor < l[j].Minor) || (l[i].Major == l[j].Major &&
 		l[i].Minor < l[j].Minor && l[i].Patch < l[j].Patch)
+}
+
+// Latest pops a SemVer instance of latest version.
+func (l SemVerList) Latest() *SemVer {
+	sort.Sort(l)
+	return l.Last()
+}
+
+// Last pops last element. If length of SemVerList is 0, last returns &SemVer{0,0,0}.
+func (l SemVerList) Last() *SemVer {
+	if length := len(l); length > 0 {
+		return &l[length-1]
+	}
+	return New(0, 0, 0)
 }
