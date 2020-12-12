@@ -28,7 +28,9 @@ func TestGitTag(t *testing.T) {
 		tc := tc
 		t.Run(n, func(t *testing.T) {
 			version := "v99.99.99"
+			// nolint:errcheck
 			TagVersioning(version)
+			// nolint:errcheck
 			defer DeleteTag(version)
 			result, _ := Tag()
 			assert.Equal(t, tc, result)

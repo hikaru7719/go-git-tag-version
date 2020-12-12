@@ -15,8 +15,8 @@ var (
 		Short: "go-git-tag-version suports versioning of git tag.",
 		Long: `You can use git-tag-version with --major, --minor, --patch flags like yarn version. 
 git-tag-version increments your git tag version depending on your flags.`,
-		Run: func(cmd *cobra.Command, args []string) {
-			runner.Run(major, minor, patch)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runner.Run(major, minor, patch)
 		},
 	}
 )

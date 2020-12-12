@@ -10,6 +10,7 @@ import (
 
 // Run is cordinator method.
 func Run(major, minor, patch bool) error {
+	// nolint:errcheck
 	git.Fetch()
 	output, err := git.Tag()
 	if err != nil {
