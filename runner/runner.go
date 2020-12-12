@@ -11,9 +11,8 @@ import (
 
 // New is factory method for Runner.
 func New(dryRun bool) *Runner {
-	git := git.New(dryRun)
 	return &Runner{
-		git: git,
+		git: git.New(dryRun),
 	}
 }
 
