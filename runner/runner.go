@@ -13,19 +13,19 @@ func Run(major, minor, patch bool) error {
 	git.Fetch()
 	output, err := git.Tag()
 	if err != nil {
-		return xerrors.Errorf("git tag command failed #w", err)
+		return xerrors.Errorf("git tag command failed %w", err)
 	}
 
 	semvers := versioning.From(git.Parse(output))
 	incrementer, err := versioning.NewIncrement(major, minor, patch)
 	if err != nil {
-		return xerrors.Errorf("NewIncrement failed major:%v, minor:%,v patch:%v #w", major, minor, patch, err)
+		return xerrors.Errorf("NewIncrement failed major:%v, minor:%v patch:%v %w", major, minor, patch, err)
 	}
 
 	newVersion := incrementer.Increment(semvers.Latest())
 	_, err = git.TagVersioning(newVersion.ToString())
 	if err != nil {
-		return xerrors.Errorf("git tab versioning failed %s #w", newVersion.ToString(), err)
+		return xerrors.Errorf("git tab versioning failed %s %w", newVersion.ToString(), err)
 	}
 
 	log.Printf("new version is %s\n", newVersion.ToString())
